@@ -5,18 +5,21 @@ package com.arrizabalaga
  *
  * @author arrizabalaga, @date 7/6/14 9:47 AM
  */
-
-
-import com.arrizabalaga.BuildTree
 import spock.lang.Specification
 
 class NodeSpec extends Specification{
-    def "someLibraryMethod returns true"() {
+    def "Should add children in order"() {
         setup:
-        BuildTree lib = new BuildTree()
+        Node parent=new Node(id:1)
+        Node childA=new Node(id:2)
+        Node childB=new Node(id:3)
         when:
-        def result = lib.someLibraryMethod()
+        parent.addChildren(childA)
         then:
-        result == true
+        parent.children==[childA]
+        when:
+        parent.addChildren(childB)
+        then:
+        parent.children==[childA,childB]
     }
 }

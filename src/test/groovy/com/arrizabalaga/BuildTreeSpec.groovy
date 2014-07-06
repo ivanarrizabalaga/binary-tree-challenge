@@ -11,12 +11,27 @@ import com.arrizabalaga.BuildTree
 import spock.lang.Specification
 
 class BuildTreeSpec extends Specification{
-    def "someLibraryMethod returns true"() {
-        setup:
-        BuildTree lib = new BuildTree()
+    def "Should return 1 as root"() {
+        given:
+        int[][] input=[ [2, 4],  [1, 2], [3, 6], [1, 3], [2, 5] ]
         when:
-        def result = lib.someLibraryMethod()
+        Node root=BuildTree.reconstructTree(input)
         then:
-        result == true
+        root
+        root.id==1
+        root.children[0].id==2
+        root.children[1].id==3
     }
+
+    def "Should find several root nodes throwing exception"() {
+        given:
+            int[][] input=[ [2, 4],  [1, 2], [3, 6]]
+        when:
+            Node root=BuildTree.reconstructTree(input)
+        then:
+            Exception e=thrown()
+            e.message=="Several root nodes found [1, 3]."
+    }
+
+
 }
